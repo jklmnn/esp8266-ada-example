@@ -14,6 +14,6 @@ is
       return "Make with Ada!";
    end Message;
 begin
-   Componolit.Runtime.Debug.Log_Debug (Message & ASCII.LF & ASCII.CR);
+   Componolit.Runtime.Debug.Log_Debug (Message);
    Delay_Ms (500000);
 end Main;

@@ -8,7 +8,7 @@ all: ../ada_runtime src/esp8266/esp8266-ada-example.a
 src/esp8266/esp8266-ada-example.a: main.o b~main.o | src/esp8266
 	llvm-ar rcs $@ $^
 
-main.o main.ali: src/main.adb
+main.o main.ali: src/main.adb ada-runtime/build/arduino_esp8266/obj
 	llvm-gcc -c $(CARGS) $(FLAGS) $(RTS) $< -o $@
 
 b~main.adb: main.ali
@@ -23,6 +23,10 @@ src/esp8266:
 ../ada_runtime:
 	ln -s $(PWD)/ada-runtime/build/arduino_esp8266 ../ada_runtime
 
+ada-runtime/build/arduino_esp8266/obj:
+	make -C ada-runtime esp8266
+
 .PHONY: clean
 clean:
+	make -C ada-runtime clean
 	rm -f main.* b~main.* src/esp8266/esp8266-ada-example.a
